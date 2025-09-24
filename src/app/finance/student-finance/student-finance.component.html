@@ -1,0 +1,42 @@
+<div class="top-panel">
+  <mat-form-field>
+    <mat-label>Select Term</mat-label>
+    <mat-select (selectionChange)="termChanged($event.value)" [(ngModel)]="selectedTerm">
+      <mat-option *ngFor="let term of terms$ | async" [value]="term">{{ term.num +
+        " " + term.year }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <app-student-search class="search" (studentSelected)="selectedStudentChanged($event)"></app-student-search>
+
+  <app-current-enrolment *ngIf="invoice?.student; else noEnrolment" class="enrolment"
+    [studentNumber]="invoice?.student?.studentNumber"></app-current-enrolment>
+
+  <ng-template #noEnrolment>
+    no enrolment
+  </ng-template>
+
+
+  <button mat-raised-button color="primary" (click)="fetchInvoice()"
+    [disabled]="!selectedStudentNumber || !selectedTerm">
+    <mat-icon>receipt</mat-icon> Fetch Invoice
+  </button>
+</div>
+
+<div class="container">
+  <mat-card>
+    <app-invoice-item *ngIf="invoice?.invoiceNumber; else noInvoice" [invoice]="invoice"
+      [downloadable]="false"></app-invoice-item>
+
+    <ng-template #noInvoice>
+      <div *ngIf="fetchInvoiceError$ | async as error; else loadingOrNoData">
+        <p style="color: red;" class="no-invoice">{{ error }}</p>
+      </div>
+      <ng-template #loadingOrNoData>
+        <p class="no-invoice">Select a student and term and click 'Fetch Invoice'.</p>
+      </ng-template>
+    </ng-template>
+  </mat-card>
+
+  <app-billing *ngIf="invoice?.enrol" [enrolment]="invoice?.enrol" class="billing-container"></app-billing>
+</div>
