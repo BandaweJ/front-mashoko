@@ -8,7 +8,7 @@ import { SigninComponent } from './signin/signin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/auth.effects';
-import { AuthGuardService } from './auth-guard.service';
+import { AuthGuardService, BootstrapGuardService } from './auth-guard.service';
 import { AuthService } from './auth.service';
 import { ProfileComponent } from './profile/profile.component';
 import { AppRoutingModule } from '../app-routing.module';
@@ -16,6 +16,7 @@ import { PersonalDetailsComponent } from './profile/personal-details/personal-de
 import { ContactDetailsComponent } from './profile/contact-details/contact-details.component';
 import { AcademicDetailsComponent } from './profile/academic-details/academic-details.component';
 import { AccountDetailsComponent } from './profile/account-details/account-details.component';
+import { BootstrapRegisterComponent } from './bootstrap-register/bootstrap-register.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AccountDetailsComponent } from './profile/account-details/account-detai
     ContactDetailsComponent,
     AcademicDetailsComponent,
     AccountDetailsComponent,
+    BootstrapRegisterComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -35,6 +37,6 @@ import { AccountDetailsComponent } from './profile/account-details/account-detai
     EffectsModule.forFeature([AuthEffects]),
     AppRoutingModule,
   ],
-  providers: [AuthGuardService, AuthService],
+  providers: [AuthGuardService, BootstrapGuardService, AuthService],
 })
 export class AuthModule {}

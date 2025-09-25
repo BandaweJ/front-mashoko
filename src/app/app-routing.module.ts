@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
-import { AuthGuardService } from './auth/auth-guard.service';
+import { AuthGuardService, BootstrapGuardService, canLeaveBootstrapRegisterGuard } from './auth/auth-guard.service';
+import { BootstrapRegisterComponent } from './auth/bootstrap-register/bootstrap-register.component';
 import { StudentsListComponent } from './registration/students-list/students-list.component';
 import { TeachersListComponent } from './registration/teachers-list/teachers-list.component';
 import { TermsClassesComponent } from './enrolment/terms-classes/terms-classes.component';
@@ -43,6 +44,13 @@ import { ExemptionReportsComponent } from './finance/reports/exemption-reports/e
 const routes: Routes = [
   { path: 'signin', component: SigninComponent, title: 'Sign In' },
   { path: 'signup', component: SignupComponent, title: 'Sign Up' },
+  {
+    path: 'bootstrap-register',
+    component: BootstrapRegisterComponent,
+    canActivate: [AuthGuardService, BootstrapGuardService],
+    canDeactivate: [canLeaveBootstrapRegisterGuard],
+    title: 'Complete Profile',
+  },
   {
     path: 'profile',
     component: ProfileComponent,

@@ -1,0 +1,74 @@
+<div class="bootstrap-register">
+  <h2>Complete your profile</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <fieldset>
+      <legend>Identity</legend>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Title</mat-label>
+        <mat-select formControlName="title">
+          <mat-option value="Dr">Dr</mat-option>
+          <mat-option value="Prof">Prof</mat-option>
+          <mat-option value="Mr">Mr</mat-option>
+          <mat-option value="Mrs">Mrs</mat-option>
+          <mat-option value="Miss">Miss</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="id" placeholder="e.g. 03089980G12" />
+        <mat-hint>Format: 8 digits, a letter, then 2 digits (e.g. 02086980F12)</mat-hint>
+        <mat-error *ngIf="form.get('id')?.hasError('pattern') && form.get('id')?.touched">
+          Invalid ID format. Expect 8 digits + letter + 2 digits.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Surname</mat-label>
+        <input matInput formControlName="surname" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option value="Male">Male</mat-option>
+          <mat-option value="Female">Female</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset>
+      <legend>Contact</legend>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Cell</mat-label>
+        <input matInput formControlName="cell" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address" />
+      </mat-form-field>
+    </fieldset>
+
+    <fieldset>
+      <legend>Qualifications</legend>
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Qualifications (comma separated)</mat-label>
+        <input matInput formControlName="qualifications" />
+      </mat-form-field>
+    </fieldset>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting || form.invalid">
+        Save and Continue
+      </button>
+    </div>
+    <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+  </form>
+</div>
+
+

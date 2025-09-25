@@ -42,3 +42,8 @@ export const selectUserDetails = createSelector(
   authState,
   (state: fromAuthReducer.State) => state.userDetails
 );
+
+export const selectIsBootstrapAdmin = createSelector(
+  authState,
+  (state: fromAuthReducer.State) => state.user?.username === 'admin'
+);

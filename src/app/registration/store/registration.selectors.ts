@@ -24,10 +24,10 @@ export const selectIsLoading = createSelector(
   (state: fromRegistrationReducer.State) => state.isLoading
 );
 
-// export const selectAddSuccess = createSelector(
-//   registrationState,
-//   (state: fromRegistrationReducer.State) => state.addSuccess
-// );
+export const selectAddSuccess = createSelector(
+  registrationState,
+  (state: fromRegistrationReducer.State) => state.addSuccess
+);
 
 // export const selectDeleteSuccess = createSelector(
 //   registrationState,

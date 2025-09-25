@@ -42,7 +42,8 @@ export class AuthEffects {
               user,
             };
 
-            this.router.navigateByUrl('/dashboard');
+            const isBootstrap = user?.username === 'admin';
+            this.router.navigateByUrl(isBootstrap ? '/bootstrap-register' : '/dashboard');
             return signinActions.signinSuccess(payload); // Use grouped action
           }),
           catchError(
@@ -140,7 +141,8 @@ export class AuthEffects {
             authStatus.user &&
             authStatus.accessToken
           ) {
-            this.router.navigateByUrl('/dashboard');
+            const isBootstrap = authStatus.user?.username === 'admin';
+            this.router.navigateByUrl(isBootstrap ? '/bootstrap-register' : '/dashboard');
             return signinActions.signinSuccess({
               // Use grouped action for dispatch
               user: authStatus.user,
