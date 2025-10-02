@@ -6,6 +6,7 @@ import {
   userDetailsActions,
   resetErrorMessage,
   logout,
+  logoutSilent,
 } from './auth.actions'; // Import grouped actions
 import { User } from '../models/user.model';
 import { AccountStats } from '../models/account-stats.model';
@@ -108,6 +109,16 @@ export const authReducer = createReducer(
     user: null, // Clear user on logout
     accStats: null, // Clear account stats on logout
     userDetails: null, // Clear user details on logout
+  })),
+  on(logoutSilent, (state) => ({
+    // Silent logout (no user-facing side-effects like snackbars)
+    ...state,
+    isLoggedin: false,
+    accessToken: '',
+    errorMessage: '',
+    user: null,
+    accStats: null,
+    userDetails: null,
   })),
   on(accountStatsActions.fetchAccountStats, (state) => ({
     // Use grouped action

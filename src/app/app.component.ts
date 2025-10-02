@@ -10,7 +10,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Store } from '@ngrx/store';
-import { selectIsLoggedIn, selectUser } from './auth/store/auth.selectors';
+import { selectIsBootstrapAdmin, selectIsLoggedIn, selectUser } from './auth/store/auth.selectors';
 import { checkAuthStatus } from './auth/store/auth.actions';
 
 @Component({
@@ -32,6 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   user$ = this.store.select(selectUser);
   role!: string;
   isLoggedIn$: Observable<boolean>; // Simulate logged-in state, typically from an auth service
+  isBootstrapAdmin$: Observable<boolean>;
   isLoggedInStatus!: boolean; // Store the actual boolean status for TS logic
 
   private destroy$ = new Subject<void>();
@@ -48,6 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
     };
     this.mobileQuery.addListener(this._mobileQueryListener);
     this.isLoggedIn$ = this.store.select(selectIsLoggedIn);
+    this.isBootstrapAdmin$ = this.store.select(selectIsBootstrapAdmin);
   }
 
   ngOnInit(): void {

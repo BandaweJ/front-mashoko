@@ -27,7 +27,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>{{
-            role?.value === 'teacher'
+            role?.value === 'teacher' || role?.value === 'hod' || role?.value === 'admin' || role?.value === 'reception' || role?.value === 'director' || role?.value === 'editor'
             ? 'I.D'
             : role?.value == 'student'
             ? 'Student Number'

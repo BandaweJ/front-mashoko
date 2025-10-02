@@ -8,6 +8,7 @@ import {
   accountStatsActions,
   userDetailsActions,
   logout,
+  logoutSilent,
   checkAuthStatus,
   // No need to import signinFailure directly now, it's part of signinActions
 } from './auth.actions';
@@ -123,6 +124,7 @@ export class AuthEffects {
         ofType(logout), // Still an individual action
         tap(() => {
           localStorage.removeItem('token');
+          this.snackBar.open('Logged out successfully', 'Close', { duration: 3000 });
           this.router.navigateByUrl('/signin');
         })
       ),
@@ -151,10 +153,11 @@ export class AuthEffects {
           } else {
             localStorage.removeItem('token');
             this.router.navigateByUrl('/signin');
-            return logout(); // Still an individual action
+            return logoutSilent(); // Use grouped action
           }
         })
       )
-    // No `dispatch: false` because this effect explicitly dispatches `signinSuccess` or `logout`.
-  );
+    )
+    // No `dispatch: false` because this effect explicitly dispatches `signinSuccess` or `logoutSilent`.
+  ;
 }

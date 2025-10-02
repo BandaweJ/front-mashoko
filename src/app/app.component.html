@@ -1,10 +1,10 @@
 <mat-toolbar color="primary" class="toolbar">
   <ng-container *ngIf="isLoggedIn$ | async as isLoggedInState">
     <mat-icon (click)="sidenav.toggle(); isSidenavCollapsed = false"
-      *ngIf="isLoggedInState && isScreenSmall">menu</mat-icon>
+      *ngIf="isLoggedInState && isScreenSmall && !(isBootstrapAdmin$ | async)">menu</mat-icon>
   </ng-container>
   <span>
-    <h1>Junior High School</h1>
+    <h1>Mashoko High School</h1>
   </span>
 
   <app-profile-buttons [isLoggedIn]="isLoggedIn$ | async"></app-profile-buttons>
@@ -12,9 +12,9 @@
 
 <mat-sidenav-container>
   <mat-sidenav role="navigation" #sidenav [mode]="isScreenSmall ? 'over' : 'side'"
-    [opened]="(!isScreenSmall && isLoggedInStatus)" [class.collapsed]="isSidenavCollapsed && !isScreenSmall"
+    [opened]="(!isScreenSmall && isLoggedInStatus && !(isBootstrapAdmin$ | async))" [class.collapsed]="isSidenavCollapsed && !isScreenSmall"
     (mouseenter)="!isScreenSmall ? isSidenavCollapsed = false : null"
-    (mouseleave)="!isScreenSmall ? isSidenavCollapsed = true : null" (openedChange)="onSidenavOpenedChange($event)">
+    (mouseleave)="!isScreenSmall ? isSidenavCollapsed = true : null" (openedChange)="onSidenavOpenedChange($event)" *ngIf="!(isBootstrapAdmin$ | async)">
 
     <div class="sidenav-container">
       <mat-accordion>
@@ -47,10 +47,10 @@
               <span *ngIf="!isSidenavCollapsed || isScreenSmall" class="menu-text">Students</span>
             </button>
             <!-- Parents -->
-            <button mat-button routerLink="/parents" routerLinkActive="active">
+            <!-- <button mat-button routerLink="/parents" routerLinkActive="active">
               <mat-icon>family_restroom</mat-icon>
               <span *ngIf="!isSidenavCollapsed || isScreenSmall" class="menu-text">Parents</span>
-            </button>
+            </button> -->
           </div>
         </mat-expansion-panel>
 
@@ -98,30 +98,30 @@
         </mat-expansion-panel>
 
         <!-- Attendance -->
-        <mat-expansion-panel *ngIf="role === 'admin' || role === 'teacher' || role === 'hod'">
+        <!-- <mat-expansion-panel *ngIf="role === 'admin' || role === 'teacher' || role === 'hod'"> -->
           <!-- Attendance Header -->
-          <mat-expansion-panel-header>
+          <!-- <mat-expansion-panel-header>
             <mat-panel-title>
               <mat-icon>event_available</mat-icon>
               <span *ngIf="!isSidenavCollapsed || isScreenSmall" class="menu-text">Attendance</span>
             </mat-panel-title>
-          </mat-expansion-panel-header>
+          </mat-expansion-panel-header> -->
           <!-- Attendance Content -->
-          <div class="sidenav-container">
+          <!-- <div class="sidenav-container"> -->
             <!-- Attendance Register -->
-            <button mat-button routerLink="/registers" routerLinkActive="active">
+            <!-- <button mat-button routerLink="/registers" routerLinkActive="active">
               <mat-icon>book</mat-icon>
               <span *ngIf="!isSidenavCollapsed || isScreenSmall" class="menu-text">Registers</span>
-            </button>
+            </button> -->
             <!-- Mark Attendance Register -->
-            <button mat-button *ngIf="role === 'teacher' || role === 'admin' || role === 'hod'"
+            <!-- <button mat-button *ngIf="role === 'teacher' || role === 'admin' || role === 'hod'"
               routerLink="/mark-register" routerLinkActive="active">
               <mat-icon>edit_note</mat-icon>
               <span *ngIf="!isSidenavCollapsed || isScreenSmall" class="menu-text">Mark Register</span>
             </button>
-          </div>
+          </div> -->
 
-        </mat-expansion-panel>
+        <!-- </mat-expansion-panel> -->
 
         <!-- Marks -->
         <mat-expansion-panel *ngIf="role === 'teacher' || role === 'admin' || role === 'hod'">

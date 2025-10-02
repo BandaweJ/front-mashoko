@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TeachersService } from 'src/app/registration/services/teachers.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
-import { Observable, first, map } from 'rxjs';
+import { Observable, first, map, of, switchMap } from 'rxjs';
 import { selectAddSuccess } from 'src/app/registration/store/registration.selectors';
 import { CanLeaveBootstrapRegister } from '../auth-guard.service';
 
@@ -77,13 +77,24 @@ export class BootstrapRegisterComponent implements CanLeaveBootstrapRegister {
   }
 
   canLeave(): Observable<boolean> | boolean {
-    // Allow leaving if local success flag is set, otherwise fall back to store addSuccess
+    // If already submitted successfully, allow leaving
     if (this.submissionSucceeded) {
       return true;
     }
-    return this.store.select(selectAddSuccess).pipe(
+
+    // If the user is logged out, allow leaving (e.g., after pressing Logout)
+    return this.store.select((state: any) => state.auth?.isLoggedin === true).pipe(
       first(),
-      map((success) => !!success)
+      switchMap((isLoggedIn) => {
+        if (!isLoggedIn) {
+          return of(true);
+        }
+        // Otherwise, fall back to existing success condition from registration store
+        return this.store.select(selectAddSuccess).pipe(
+          first(),
+          map((success) => !!success)
+        );
+      })
     );
   }
 }

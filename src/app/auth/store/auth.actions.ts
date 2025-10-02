@@ -74,3 +74,4 @@ export const resetErrorMessage = createAction(
 );
 export const logout = createAction('[Auth] logout'); // Changed source for consistency
 export const checkAuthStatus = createAction('[Auth] Check Auth Status');
+export const logoutSilent = createAction('[Auth] logout silent');
